@@ -1,0 +1,7 @@
+#Ant properties
+#Fri Sep 25 14:43:22 CEST 2020
+build.builddate=20200925 1442
+build.releasedate=20160818 1018
+build.vendor=hybris
+build.version=6.1.0.2
+build.version.api=6.0.0

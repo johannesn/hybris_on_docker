@@ -4,6 +4,7 @@ hybris/hybris-6.1.0.2_modulegen/*
 !hybris/hybris-6.1.0.2_modulegen/hybris
 hybris/hybris-6.1.0.2_modulegen/hybris/*
 !hybris/hybris-6.1.0.2_modulegen/hybris/roles
+hybris/hybris-6.1.0.2_modulegen/hybris/roles/**/temp
 
 # production zip files
 hybris/*.zip

@@ -1,0 +1,65 @@
+version: '3'
+services:
+  hybris-mysql:
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=hybris_modulegen
+    build: ./mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - backend
+  hybris0:
+    environment:
+      - y_db_url=jdbc:mysql://hybris-mysql:3306/hybris_modulegen
+      - y_db_username=root
+      - y_db_password=1234
+      - y_cluster_id=0
+    build: ./hybris/
+    depends_on:
+      - hybris-mysql
+    command: ["./wait_for_mysql.sh", "hybris-mysql", "root", "1234", "--", "/bin/bash", "/usr/src/hybris/start.sh"]
+    ports:
+      - "4001:9001"
+      - "4002:9002"
+      - "4003:8000"
+    volumes:
+      - media:/mnt/media
+    networks:
+      - frontend
+      - backend
+  hybris1:
+    environment:
+      - y_db_url=jdbc:mysql://hybris-mysql:3306/hybris_modulegen
+      - y_db_username=root
+      - y_db_password=1234
+      - y_cluster_id=1
+    build: ./hybris/
+    depends_on:
+      - hybris-mysql
+    command: ["./wait_for_mysql.sh", "hybris-mysql", "root", "1234", "--", "/bin/bash", "/usr/src/hybris/start.sh"]
+    ports:
+      - "5001:9001"
+      - "5002:9002"
+      - "5003:8000"
+    volumes:
+      - media:/mnt/media
+    networks:
+      - frontend
+      - backend
+  nginx:
+    build: ./nginx/
+    depends_on:
+      - hybris0
+      - hybris1
+    command: ["~/wait_for_http.sh", "https://hybris0:9002/login.jsp", "https://hybris1:9002/login.jsp", "--", "nginx"]
+    ports:
+      - "9001:9001"
+      - "9002:9002"
+    networks:
+      - frontend
+networks:
+  frontend:
+  backend:
+volumes:
+  media:
