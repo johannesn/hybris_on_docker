@@ -1,0 +1,17 @@
+
+# hybris files
+hybris/hybris-6.1.0.2_modulegen/*
+!hybris/hybris-6.1.0.2_modulegen/hybris
+hybris/hybris-6.1.0.2_modulegen/hybris/*
+!hybris/hybris-6.1.0.2_modulegen/hybris/roles
+
+# production zip files
+hybris/*.zip
+hybris/hybrisServerREADME.txt
+
+# mysql dump
+mysql/imports/*
+
+# hybris certificates and private key
+nginx/hybris.cer
+nginx/hybris.key
